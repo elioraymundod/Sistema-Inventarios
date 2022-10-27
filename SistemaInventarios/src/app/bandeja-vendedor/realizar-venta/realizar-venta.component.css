@@ -1,0 +1,22 @@
+.botones{
+    outline: none;
+    color: white;
+    background-color: #2294B3;
+}
+
+.titulo{
+    text-align: center;
+    color: #2294B3;
+}
+
+.matCardClass{
+    margin: 2%;
+}
+
+.alinearDerecha{
+    float: right;
+}
+
+.centrarCtrls{
+    align-content: center;
+}

@@ -1,0 +1,140 @@
+<mat-toolbar>
+    <div class="col-12">
+            <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item class="btn" (click)="volverBandejaBodeguero()">Menu Principal</button>
+                <button mat-menu-item class="btn" (click)="verIngresarProductos()">Ingresar pedido</button>
+                <button mat-menu-item class="btn" [matMenuTriggerFor]="admin">Administracion</button>
+            </mat-menu>
+            <mat-menu #admin="matMenu">
+                <button mat-menu-item class="btn" (click)="administrarCategorias()">Administrar categorias</button>
+                <button mat-menu-item class="btn" (click)="administrarUnidadesDeMedida()">Administrar U/M</button>
+            </mat-menu>
+            <span>Sistema de Ventas</span>
+        <!--div class="alinearDerecha">
+            <button mat-icon-button class="botones">
+                <mat-icon  matBadgeColor="warn">notifications</mat-icon>
+            </button>
+        </div-->
+    </div>
+</mat-toolbar><br>
+<H1 class="titulo"><b>Inventario</b></H1><br>
+
+<form [formGroup]="filtroFormGroup" class=" margen">
+    <mat-form-field class="example-full-width col-3">
+        <mat-label>Filtro</mat-label>
+        <input matInput formControlName="filtro">
+    </mat-form-field>
+    <button mat-raised-button class="botones" color="primary" data-bs-toggle="modal"
+        data-bs-target="#modalNuevoProducto" >
+        Nuevo Producto
+        <mat-icon>add_circle</mat-icon>
+    </button>
+</form>
+
+<div class="margen">
+    <section>
+        <table mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="producto">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Producto </th>
+                <td mat-cell *matCellDef="let element">{{element.nombreProducto}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="categoria">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Categoria </th>
+                <td mat-cell *matCellDef="let element">{{element.nombreCategoria}} </td>
+            </ng-container>
+            
+
+            <ng-container matColumnDef="unidadMedida">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Unidad de Medida </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreUM}}</td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="precio">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Precio </th>
+                <td mat-cell *matCellDef="let element"> {{element.precio_unitario}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Accion </th>
+                <td mat-cell *matCellDef="let element"> 
+                    <button mat-icon-button class="example-icon btn" data-bs-toggle="modal"
+                    data-bs-target="#editarUsuario" (click)="setValues(element)">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[15]" showFirstLastButtons></mat-paginator>
+    </section>
+</div>
+
+<!--Modal crear producto-->
+<div class="modal fade bd-example-modal-lg" id="modalNuevoProducto" tabindex="-1"
+    aria-labelledby="modalNuevoUsuarioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="modalNuevoProyectoLabel">Nuevo Producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--Formulario-->
+                <form [formGroup]="formNuevoProducto">
+                    <!--Nombre del proeducto-->
+                    <mat-form-field class="example-full-width col-6" appearance="fill">
+                        <mat-label>Nombre del Producto</mat-label>
+                        <input matInput #nom maxlength="25" formControlName="nombre">
+                        <mat-hint align="end">{{nom.value.length}} / 25</mat-hint>
+                    </mat-form-field>
+                    <!--precio-->
+                    <mat-form-field class="example-full-width col-6" appearance="fill">
+                        <mat-label>Precio</mat-label>
+                        <input matInput maxlength="5" #nit formControlName="precio" type="number">
+                        <mat-hint align="end">{{nit.value.length}} / 5</mat-hint>
+                    </mat-form-field>
+                    <!--Descripcion-->
+                    <mat-form-field class="example-full-width col-12" appearance="fill">
+                        <mat-label>Descripcion</mat-label>
+                        <textarea  matInput maxlength="100" #nit formControlName="descripcion" type="number"></textarea>
+                        <mat-hint align="end">{{nit.value.length}} / 100</mat-hint>
+                    </mat-form-field>
+                    <!--Categoria-->
+                    <mat-form-field appearance="fill" class="example-full-width col-6">
+                        <mat-label>Categoria</mat-label>
+                        <mat-select formControlName="categoria">
+                            <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+                                {{categoria.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!--Unidad de medida-->
+                    <mat-form-field appearance="fill" class="example-full-width col-6">
+                        <mat-label>Unidad de Medida</mat-label>
+                        <mat-select formControlName="unidadMedida">
+                            <mat-option *ngFor="let um of unidadesMedida" [value]="um.id">
+                                {{um.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </form>
+                <br>
+                <div class="modal-footer">
+                    <button mat-button data-bs-dismiss="modal">Cancelar</button>
+                    <button mat-raised-button style="background-color: #2294B3; color: white;"
+                        data-bs-dismiss="modal" [disabled]="formNuevoProducto.invalid" (click)="crearProducto(formNuevoProducto.value)">Crear
+                        Producto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<mat-toolbar>
+    <div class="col-12">
+            <button mat-icon-button class="example-icon botones" [matMenuTriggerFor]="menu">
+                <mat-icon>person</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item class="botones" (click)="cerrarSesion()">Cerrar sesión</button>
+            </mat-menu>
+            <span>Sistema de Ventas</span>
+        <div class="alinearDerecha">
+            <!--button mat-icon-button class="botones">
+                <mat-icon matBadge="{{cantidadNotificaciones}}" matBadgeColor="warn">notifications</mat-icon>
+            </button-->
+        </div>
+    </div>
+</mat-toolbar><br>
+<H1 class="titulo"><b>Bienvenido a la bandeja del bodeguero</b></H1><br><br>
+
+<mat-card class="matCardClass">
+    <div class="row">
+        <div class="col-3">
+            <div class="col-8 mx-auto">
+              <div class="row">
+                <div class="col-md-12" id="verInventario" (click)="verInventario()">
+                  <mat-icon class="bigIcon">menu_book</mat-icon>
+                  <!--img src="assets/img/inventario.png" class="bigIcon"-->
+                  <h1 class="marginTexto"><b>Ver Inventario</b></h1>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12" id="secondSinDemora">
+                  <div class="row" (click)="verInventario()">
+                    <p class="verDetalle">Ver detalle </p>
+                    <img src="assets/img/flecha.png" class="flecha">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <!--div class="col-3">
+            <div class="col-8 mx-auto">
+              <div class="row">
+                <div class="col-md-12" id="verInventario">
+                  <mat-icon class="bigIcon">local_shipping</mat-icon>
+                  <!--img src="assets/img/inventario.png" class="bigIcon">
+                  <h1 class="marginTexto"><b>Solicitar productos</b></h1>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12" id="secondSinDemora">
+                  <div class="row">
+                    <p class="verDetalle">Ver detalle </p>
+                    <img src="assets/img/flecha.png" class="flecha">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div-->
+    </div>    
+</mat-card>

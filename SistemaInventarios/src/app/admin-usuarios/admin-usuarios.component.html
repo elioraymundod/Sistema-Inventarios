@@ -1,0 +1,218 @@
+<mat-toolbar>
+    <div class="col-12">
+        <button mat-icon-button class="example-icon btn" [matMenuTriggerFor]="menu">
+            <mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item class="btn" (click)="cerrarSesion()">Cerrar sesión</button>
+        </mat-menu>
+        <span>Sistema de Ventas</span>
+        <span class="example-spacer"></span>
+    </div>
+</mat-toolbar><br>
+
+<H1 class="titulo"><b>Administración de usuarios</b></H1>
+
+<form [formGroup]="formData" class=" margen">
+    <mat-form-field class="example-full-width col-3">
+        <mat-label>Filtro</mat-label>
+        <input matInput formControlName="filtro">
+    </mat-form-field>
+    <button mat-raised-button class="botones" color="primary" data-bs-toggle="modal"
+        data-bs-target="#modalNuevoUsuario" (click)="resetForm()">
+        Nuevo Usuario
+        <mat-icon>add_circle</mat-icon>
+    </button>
+</form>
+
+
+
+<div class="margen">
+    <section>
+        <table mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="nombreUsuario">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Nombre </th>
+                <td mat-cell *matCellDef="let element">{{element.nombre}} </td>
+            </ng-container>
+            
+
+            <ng-container matColumnDef="usuario">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Usuario </th>
+                <td mat-cell *matCellDef="let element">{{element.user}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="rol">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Rol Asignado </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreRol}}</td>
+            </ng-container>
+
+
+            <!--ng-container matColumnDef="tiendaAsignada">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Tienda Asignada </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreTienda}}</td>
+            </ng-container-->
+
+            <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef class="headerTable"> Accion </th>
+                <td mat-cell *matCellDef="let element"> 
+                    <button mat-icon-button class="example-icon btn" data-bs-toggle="modal"
+                    data-bs-target="#editarUsuario" (click)="setValues(element)">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[15]" showFirstLastButtons></mat-paginator>
+    </section>
+</div>
+
+<!--Modal crear Usuario-->
+<div class="modal fade bd-example-modal-lg" id="modalNuevoUsuario" tabindex="-1"
+    aria-labelledby="modalNuevoUsuarioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="modalNuevoProyectoLabel">Nuevo Usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--Formulario-->
+                <form [formGroup]="formNuevoUsuario">
+                    <!--Nombre del usuario-->
+                    <mat-form-field class="example-full-width col-6" appearance="fill">
+                        <mat-label>Nombre del Usuario</mat-label>
+                        <input matInput #nom maxlength="25" formControlName="nombre">
+                        <mat-hint align="end">{{nom.value.length}} / 25</mat-hint>
+                    </mat-form-field>
+                    <!--NIT-->
+                    <mat-form-field class="example-full-width col-6" appearance="fill">
+                        <mat-label>NIT</mat-label>
+                        <input matInput maxlength="25" #nit formControlName="nit">
+                        <mat-hint align="end">{{nit.value.length}} / 25</mat-hint>
+                    </mat-form-field>
+                    <!--Contraseña-->
+                    <br>
+                    <mat-form-field appearance="fill" class="col-6">
+                        <mat-label>Rol</mat-label>
+                        <mat-select formControlName="rol">
+                            <mat-option *ngFor="let rol of roles" [value]="rol.id">
+                                {{rol.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!--mat-form-field appearance="fill" class="col-6">
+                        <mat-label>Tienda asignada</mat-label>
+                        <mat-select formControlName="tienda">
+                            <mat-option *ngFor="let tienda of tiendas" [value]="tienda.id">
+                                {{tienda.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field-->
+                    <!--Usuario-->
+                    <mat-form-field class="example-full-width col-6" appearance="fill">
+                        <mat-label>Usuario</mat-label>
+                        <input matInput maxlength="15" #ab formControlName="usuario">
+                        <mat-hint align="end">{{ab.value.length}} / 15</mat-hint>
+                    </mat-form-field>
+                    <!--Contraseña-->
+                    <mat-form-field class="col-5">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput #desc placeholder="" maxlength="25" required
+                            [type]="show ? 'text' : 'password'" formControlName="contrasena">
+                        <mat-hint align="end">{{desc.value.length}} / 25</mat-hint>
+                    </mat-form-field>
+                    <button mat-icon-button class="example-icon btn" (click)="verPassword()">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+
+                </form>
+                <br>
+                <div class="modal-footer">
+                    <button mat-button data-bs-dismiss="modal">Cancelar</button>
+                    <button mat-raised-button style="background-color: #2294B3; color: white;"
+                        data-bs-dismiss="modal" [disabled]="formNuevoUsuario.invalid" (click)="crearUsuario(formNuevoUsuario.value)">Crear
+                        Usuario</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Editar Usuario-->
+<div class="modal fade bd-example-modal-lg" id="editarUsuario" tabindex="-1"
+    aria-labelledby="modalNuevoUsuarioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="modalNuevoProyectoLabel">Editar Usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--Formulario-->
+                <form [formGroup]="formEditarUsuario">
+                    <!--Nombre del usuario-->
+                    <mat-form-field class="example-full-width col-6" appearance="fill">
+                        <mat-label>Nombre del Usuario</mat-label>
+                        <input matInput #nom maxlength="25" formControlName="nombre">
+                        <mat-hint align="end">{{nom.value.length}} / 25</mat-hint>
+                    </mat-form-field>
+                    <!--NIT-->
+                    <mat-form-field class="example-full-width col-6" appearance="fill">
+                        <mat-label>NIT</mat-label>
+                        <input matInput maxlength="25" #nit formControlName="nit">
+                        <mat-hint align="end">{{nit.value.length}} / 25</mat-hint>
+                    </mat-form-field>
+                    <!--Contraseña-->
+                    <br>
+                    <mat-form-field appearance="fill" class="col-6">
+                        <mat-label>Rol</mat-label>
+                        <mat-select formControlName="rol">
+                            <mat-option *ngFor="let rol of roles" [value]="rol.id">
+                                {{rol.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!--mat-form-field appearance="fill" class="col-6">
+                        <mat-label>Tienda asignada</mat-label>
+                        <mat-select formControlName="tienda">
+                            <mat-option *ngFor="let tienda of tiendas" [value]="tienda.id">
+                                {{tienda.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field-->
+                    <!--Usuario-->
+                    <mat-form-field class="example-full-width col-6" appearance="fill">
+                        <mat-label>Usuario</mat-label>
+                        <input matInput maxlength="15" #ab formControlName="usuario">
+                        <mat-hint align="end">{{ab.value.length}} / 15</mat-hint>
+                    </mat-form-field>
+                    <!--Contraseña-->
+                    <mat-form-field class="col-5">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput #desc placeholder="" maxlength="25" required
+                            [type]="show ? 'text' : 'password'" formControlName="contrasena">
+                        <mat-hint align="end">{{desc.value.length}} / 25</mat-hint>
+                    </mat-form-field>
+                    <button mat-icon-button class="example-icon btn" (click)="verPassword()">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+
+                </form>
+                <br>
+                <div class="modal-footer">
+                    <button mat-button data-bs-dismiss="modal">Cancelar</button>
+                    <button mat-raised-button style="background-color: #C0392B; color: white; margin-right: 2%; margin-left: 2%;"
+                        data-bs-dismiss="modal" (click)="actualizarUsuario(formEditarUsuario.value, 0)">Eliminar Usuario</button>
+                    <button mat-raised-button style="background-color: #2294B3; color: white;"
+                        data-bs-dismiss="modal" [disabled]="formEditarUsuario.invalid" (click)="actualizarUsuario(formEditarUsuario.value, 1)">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+.botones{
+    background: #2294B3; 
+    color: white; 
+    outline: none;
+    width: 150px;
+    height: 45px;
+}
+
+.titulo{
+    text-align: center;
+    color: #2294B3;
+}
+
+.alinearDerecha{
+    float: right;
+}
+
+.marginTexto{
+    text-align: center;
+}
+
+.flecha{
+    width: 4%;
+    height: 2%;
+    margin-top: 1%;
+    margin-left: 60%
+}
+
+.verDetalle{
+    font-size: 10px;
+    margin-left: 20px;
+}
+
+.bigIcon{
+    width: 18%;
+}
+
+.matCardClass{
+    margin: 2%;
+    height: 60%;
+}
+
+.headerTable {
+    background-color: #2294B3;
+    color: white;
+    text-align: left;
+    font-size: 14px;
+}
+
+table {
+    text-align: justify;
+    margin: auto;
+    width: 100%;
+}
+
+.margen{
+    margin: 2%;
+}
+
+::ng-deep .cdk-overlay-container{
+    z-index: 1200 !important;
+}

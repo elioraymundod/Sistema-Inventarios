@@ -1,0 +1,156 @@
+<mat-toolbar>
+    <div class="container col-12">
+        <button mat-icon-button class="example-icon" style="outline: none;">
+            <mat-icon>home</mat-icon>
+        </button>
+        <span>Sistema de Ventas</span>
+    </div>
+</mat-toolbar><br>
+<H1 class="titulo"><b>Realizar Venta</b></H1><br><br>
+<mat-card class="matCardClass">
+    <mat-stepper linear="!isLinear" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Seleccionar productos</ng-template>
+                <div class="containter centrarCtrls">
+                    <mat-form-field appearance="fill" class="col-3">
+                        <mat-label>Seleccione categoria</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill" class="col-3">
+                        <mat-label>Seleccione un producto</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let producto of productos" [value]="producto.value">
+                            {{producto.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width col-3" appearance="fill">
+                        <mat-label>Ingrese cantidad</mat-label>
+                        <input matInput >
+                      </mat-form-field>
+                      <button mat-mini-fab class="botones">
+                        <mat-icon>add</mat-icon>
+                      </button>
+                      <br>
+                      <section>
+                        <table mat-table [dataSource]="dataSource">
+                
+                            <ng-container matColumnDef="categoria">
+                                <th mat-header-cell *matHeaderCellDef class="headerTable"> Categoría </th>
+                                <td mat-cell *matCellDef="let element"> </td>
+                                <td mat-footer-cell *matFooterCellDef class="botones"> Total </td>
+                            </ng-container>
+                
+                
+                            <ng-container matColumnDef="producto">
+                                <th mat-header-cell *matHeaderCellDef class="headerTable"> Producto </th>
+                                <td mat-cell *matCellDef="let element"> </td>
+                                <td mat-footer-cell *matFooterCellDef class="botones">  </td>
+                            </ng-container>
+                
+                
+                            <ng-container matColumnDef="cantidad">
+                                <th mat-header-cell *matHeaderCellDef class="headerTable"> Cantidad </th>
+                                <td mat-cell *matCellDef="let element"> </td>
+                                <td mat-footer-cell *matFooterCellDef class="botones">  </td>
+                            </ng-container>
+                
+                
+                            <ng-container matColumnDef="precio">
+                                <th mat-header-cell *matHeaderCellDef class="headerTable"> Precio </th>
+                                <td mat-cell *matCellDef="let element"> </td>
+                                <td mat-footer-cell *matFooterCellDef class="botones">  </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="subtotal">
+                                <th mat-header-cell *matHeaderCellDef class="headerTable"> Subtotal </th>
+                                <td mat-cell *matCellDef="let element"> </td>
+                                <td mat-footer-cell *matFooterCellDef class="botones"> 100 </td>
+                            </ng-container>
+                
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+                        </table>
+                
+                        <mat-paginator [pageSizeOptions]="[15]" showFirstLastButtons></mat-paginator>
+                    </section><br>
+                    <div>
+                        <button mat-button matStepperNext class="alinearDerecha botones">Continuar</button>
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="Información de dirección">
+            <form [formGroup]="secondFormGroup">
+                <mat-form-field appearance="fill" class="col-12">
+                    <mat-label>Dirección</mat-label>
+                    <textarea matInput required></textarea>
+                </mat-form-field>
+                <div>
+                    <button mat-button matStepperNext class="alinearDerecha botones" style="margin-left: 2%;">Continuar</button>
+                    <button mat-button matStepperPrevious class="alinearDerecha botones">Regresar</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Confirmar venta</ng-template>
+            <section>
+                <table mat-table [dataSource]="dataSource">
+        
+                    <ng-container matColumnDef="categoria">
+                        <th mat-header-cell *matHeaderCellDef class="headerTable"> Categoría </th>
+                        <td mat-cell *matCellDef="let element"> </td>
+                        <td mat-footer-cell *matFooterCellDef class="botones"> Total </td>
+                    </ng-container>
+        
+        
+                    <ng-container matColumnDef="producto">
+                        <th mat-header-cell *matHeaderCellDef class="headerTable"> Producto </th>
+                        <td mat-cell *matCellDef="let element"> </td>
+                        <td mat-footer-cell *matFooterCellDef class="botones">  </td>
+                    </ng-container>
+        
+        
+                    <ng-container matColumnDef="cantidad">
+                        <th mat-header-cell *matHeaderCellDef class="headerTable"> Cantidad </th>
+                        <td mat-cell *matCellDef="let element"> </td>
+                        <td mat-footer-cell *matFooterCellDef class="botones">  </td>
+                    </ng-container>
+        
+        
+                    <ng-container matColumnDef="precio">
+                        <th mat-header-cell *matHeaderCellDef class="headerTable"> Precio </th>
+                        <td mat-cell *matCellDef="let element"> </td>
+                        <td mat-footer-cell *matFooterCellDef class="botones">  </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="subtotal">
+                        <th mat-header-cell *matHeaderCellDef class="headerTable"> Subtotal </th>
+                        <td mat-cell *matCellDef="let element"> </td>
+                        <td mat-footer-cell *matFooterCellDef class="botones"> 100 </td>
+                    </ng-container>
+        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+                </table>
+        
+                <mat-paginator [pageSizeOptions]="[15]" showFirstLastButtons></mat-paginator>
+            </section><br>
+            <mat-form-field appearance="fill" class="col-12">
+                <mat-label>Dirección</mat-label>
+                <textarea matInput readonly></textarea>
+            </mat-form-field>
+            <div>
+                <button mat-button class="alinearDerecha botones" style="margin-left: 2%;">Finalizar venta</button>
+                <button mat-button matStepperPrevious class="alinearDerecha botones">Regresar</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
+</mat-card>

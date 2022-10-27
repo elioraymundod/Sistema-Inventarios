@@ -1,0 +1,176 @@
+create table tarjetas(
+    id int primary key AUTO_INCREMENT,
+    nombreTarjeta varchar(50),
+	numeroTarjeta varchar(16),
+	cvv varchar(3),
+	fechaExpiracion varchar(5)
+);
+
+create table tiendas(
+    id int primary key AUTO_INCREMENT,
+    nombre varchar (25),
+    coordenadas varchar (100),
+    ubicacion varchar(100),
+    fecha_agrega timestamp,
+    usuario_agrega varchar(25),
+    ip_agrega varchar(15),
+    usuario_modifica varchar(25),
+    fecha_modifica timestamp,
+    ip_modifica varchar(15)
+);
+
+create table catalogos(
+    id int primary key AUTO_INCREMENT,
+    nombre varchar(25),
+    fecha_agrega timestamp,
+    usuario_agrega varchar(25),
+    ip_agrega varchar(15),
+    usuario_modifica varchar(25),
+    fecha_modifica timestamp,
+    ip_modifica varchar(15)
+);
+
+create table cat_dato(
+  	id int primary key AUTO_INCREMENT,
+    nombre varchar(25),
+    catalogo int,
+    fecha_agrega timestamp,
+    usuario_agrega varchar(25),
+    ip_agrega varchar(15),
+    usuario_modifica varchar(25),
+    fecha_modifica timestamp,
+    ip_modifica varchar(15),
+    
+    constraint FOREIGN KEY fk_cat_dato_catalogos (catalogo) references catalogos (id)
+);
+
+create table usuarios(
+  	id varchar(25) primary key,
+    nombre varchar(25),
+    user varchar(15),
+    pass varchar(25),
+    rol int,
+    tienda_asignada int,
+    fecha_agrega timestamp,
+    usuario_agrega varchar(25),
+    ip_agrega varchar(15),
+    usuario_modifica varchar(25),
+    fecha_modifica timestamp,
+    ip_modifica varchar(15),
+	estado: int
+);
+
+create table unidades_medida(
+  	id int primary key AUTO_INCREMENT,
+    nombre varchar(25),
+    abrebiacion varchar(5),
+    fecha_agrega timestamp,
+    usuario_agrega varchar(25),
+    ip_agrega varchar(15),
+    usuario_modifica varchar(25),
+    fecha_modifica timestamp,
+    ip_modifica varchar(15)
+);
+
+create table categorias(
+  	id int primary key AUTO_INCREMENT,
+    nombre varchar(25),
+    descripcion varchar(100),
+    fecha_agrega timestamp,
+    usuario_agrega varchar(25),
+    ip_agrega varchar(15),
+    usuario_modifica varchar(25),
+    fecha_modifica timestamp,
+    ip_modifica varchar(15)
+);
+
+create table productos(
+  	id int primary key AUTO_INCREMENT,
+    nombre varchar(25),
+    descripcion varchar(100),
+    categoria int,
+    unidad_medida int,
+    precio_unitario double,
+    fecha_agrega timestamp,
+    usuario_agrega varchar(25),
+    ip_agrega varchar(15),
+    usuario_modifica varchar(25),
+    fecha_modifica timestamp,
+    ip_modifica varchar(15),
+    
+    CONSTRAINT FOREIGN KEY fk_productos_categorias (categoria) references categorias(id),
+    CONSTRAINT FOREIGN KEY fk_productos_un_medidas (unidad_medida) references unidades_medida(id)
+);
+
+
+create table ventas(
+  	id int primary key AUTO_INCREMENT,
+    direccion varchar(100),
+	coordenadas_destino varchar(100),
+	distancia varchar(100),
+	monto_envio varchar(100), 
+	tiempo varchar(100),
+    nit varchar(15),
+	venta_atendida int,
+	correo varchar(100),
+    fecha_agrega timestamp,
+    usuario_agrega varchar(25),
+    ip_agrega varchar(15),
+    usuario_modifica varchar(25),
+    fecha_modifica timestamp,
+    ip_modifica varchar(15)
+);
+
+create table detalle_venta(
+  	id int primary key AUTO_INCREMENT,
+    id_venta int,
+    id_producto int,
+    cantidad int,
+    subtotal double,
+    fecha_agrega timestamp,
+    usuario_agrega varchar(25),
+    ip_agrega varchar(15),
+    usuario_modifica varchar(25),
+    fecha_modifica timestamp,
+    ip_modifica varchar(15),
+    
+    CONSTRAINT FOREIGN KEY fk_det_ventas (id_venta) references ventas(id),
+    constraint FOREIGN KEY fk_det_produc (id_producto) references productos (id)
+);
+
+create table notificaciones(
+ 	id int primary key AUTO_INCREMENT,
+    id_tienda int,
+    id_bandeja int,
+    fue_atendida boolean,
+    id_venta int,
+    fecha_creacion timestamp,
+    fecha_atendida timestamp,
+    usuario_atendio varchar(25),
+    
+    CONSTRAINT FOREIGN KEY fk_not_tiendas (id_tienda) references tiendas(id),
+    CONSTRAINT FOREIGN KEY fk_not_ventas (id_venta) references ventas(id)
+);
+
+create table productos_tiendas(
+ 	id int primary key AUTO_INCREMENT,
+    id_tienda int,
+    id_producto int,
+	cantidad int,
+    
+    CONSTRAINT FOREIGN KEY fk_pt_tiendas (id_tienda) references tiendas(id),
+    CONSTRAINT FOREIGN KEY fk_pt_productos (id_producto) references productos(id)
+);
+
+
+
+/*drop table cat_dato;*/
+/*drop table usuarios;*/
+/*drop table tiendas;*/
+/*drop table categorias;*/
+/*drop table catalogos;*/
+/*drop table unidades_medida;*/
+/*drop table productos;*/
+/*drop table ventas;*/
+/*drop table detalle_venta;*/
+/*drop table notificaciones;*/
