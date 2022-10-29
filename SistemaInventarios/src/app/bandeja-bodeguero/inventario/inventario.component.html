@@ -25,7 +25,7 @@
 <form [formGroup]="filtroFormGroup" class=" margen">
     <mat-form-field class="example-full-width col-3">
         <mat-label>Filtro</mat-label>
-        <input matInput formControlName="filtro">
+        <input matInput formControlName="filtro"  (keyup)="filtrar($event)">
     </mat-form-field>
     <button mat-raised-button class="botones" color="primary" data-bs-toggle="modal"
         data-bs-target="#modalNuevoProducto" >

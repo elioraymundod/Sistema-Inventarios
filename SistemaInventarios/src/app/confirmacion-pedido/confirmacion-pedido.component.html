@@ -1,0 +1,19 @@
+<div class="card-body">
+    
+    <mat-card class="margenArriba">
+        <mat-card-title class="titulo">Confirmacion de entrega de pedido</mat-card-title>
+        <div class="m-0 row justify-content-center">
+            <form [formGroup]="datosConfirmacion">
+                <div class="col-auto text-center">
+                    <mat-form-field>
+                        <mat-label>Codigo de pedido</mat-label>
+                        <input matInput placeholder=""  formControlName="codigo">
+                    </mat-form-field>
+                </div>
+                <div class="col-auto text-center">
+                    <button mat-raised-button class="botones margenBotones" type="button" (click)="validarCodigo(datosConfirmacion.value)" [disabled]="datosConfirmacion.invalid">Finalizar entrega</button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
+</div>

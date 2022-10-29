@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AnySourceData, LngLatBounds, LngLatLike, Map, Marker, Popup } from 'mapbox-gl'
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { DirectionsResponse, Route } from '../Interfaces/directions';
 import { Feature } from '../Interfaces/places';
@@ -70,28 +71,29 @@ export class MapService {
         })
     }
 
-    getRouteBetwenPoints(start: [number, number], end: [number, number]) {
+    getRouteBetwenPoints(start: [number, number], end: [number, number], showMessage: boolean) {
         //this.http.get<DirectionsResponse>(`https://api.mapbox.com/directions/v5/mapbox/driving/-74.207422%2C40.832648%3B-74.200118%2C40.8259?alternatives=false&geometries=geojson&language=en&overview=simplified&steps=true&access_token=pk.eyJ1IjoiZWlyYXltdW4iLCJhIjoiY2w5ZG9vejhrNG1rMDNwdDVtanp0dmxuMiJ9.EBHCyXlDR8fonaAVzYG5jw`)
-        this.http.get<DirectionsResponse>(`https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]}%2C${start[1]}%3B${end[0]}%2C${end[1]}?alternatives=false&geometries=geojson&language=en&overview=simplified&steps=true&access_token=pk.eyJ1IjoiZWlyYXltdW4iLCJhIjoiY2w5ZG9vejhrNG1rMDNwdDVtanp0dmxuMiJ9.EBHCyXlDR8fonaAVzYG5jw`)
-            .subscribe(resp => this.drawPolyLine(resp.routes[0]));
+        this.http.get<DirectionsResponse>(`https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]}%2C${start[1]}%3B${end[0]}%2C${end[1]}?alternatives=false&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${environment.mapPk}`)
+            .subscribe(resp => this.drawPolyLine(resp.routes[0], showMessage));
     }
 
-    private drawPolyLine(route: Route) {
+    private drawPolyLine(route: Route, showMessage: boolean) {
         //console.log({ distanciaKms: route.distance / 1000, duration: route.duration / 60 });
-        
-        this.productosService.distancia = (route.distance / 1000).toFixed(2) + ' kilometros';
-        this.productosService.gastosEnvio = (35 * (route.distance / 1000))/10;
-        if ((route.duration / 60) < 60) {
-            this.productosService.tiempo = (route.duration / 60).toFixed(2) + ' minutos'
-        } else {
-            this.productosService.tiempo = ((route.duration / 60) / 60).toFixed(2) + ' horas'
-        }
 
-        Swal.fire({
-            icon: 'info',
-            title: 'Se ha detectado una distancia de ' + this.productosService.distancia + ' se le cobrara un total de Q.' +this.productosService.gastosEnvio.toFixed(2) + 
-            ' de envio. Su pedido llegara aproximadamente en ' + this.productosService.tiempo + ' despues que reciba un correo electronico indicando que se ha enviado su pedido.'
-        })
+        if (showMessage) {
+            this.productosService.distancia = (route.distance / 1000).toFixed(2) + ' kilometros';
+            this.productosService.gastosEnvio = (35 * (route.distance / 1000)) / 10;
+            if ((route.duration / 60) < 60) {
+                this.productosService.tiempo = (route.duration / 60).toFixed(2) + ' minutos'
+            } else {
+                this.productosService.tiempo = ((route.duration / 60) / 60).toFixed(2) + ' horas'
+            }
+            Swal.fire({
+                icon: 'info',
+                title: 'Se ha detectado una distancia de ' + this.productosService.distancia + ' se le cobrara un total de Q.' + this.productosService.gastosEnvio.toFixed(2) +
+                    ' de envio. Su pedido llegara aproximadamente en ' + this.productosService.tiempo + ' despues que reciba un correo electronico indicando que se ha enviado su pedido.'
+            })
+        }
 
         if (!this.map) throw Error('Mapa no inicializado');
 
@@ -105,7 +107,7 @@ export class MapService {
         this.map?.fitBounds(bounds, {
             padding: 100
         });
-
+        
         // Polyline
         const sourceData: AnySourceData = {
             type: 'geojson',
@@ -123,7 +125,7 @@ export class MapService {
                 ]
             }
         }
-
+        
         if (this.map.getLayer('RouteString')) {
             this.map.removeLayer('RouteString');
             this.map.removeSource('RouteString');
@@ -145,4 +147,5 @@ export class MapService {
             }
         })
     }
+    
 }

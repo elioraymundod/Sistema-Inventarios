@@ -16,7 +16,7 @@
 <form [formGroup]="formData" class=" margen">
     <mat-form-field class="example-full-width col-3">
         <mat-label>Filtro</mat-label>
-        <input matInput formControlName="filtro">
+        <input matInput formControlName="filtro" (keyup)="filtrar($event)">
     </mat-form-field>
 </form>
 
@@ -26,25 +26,25 @@
 
             <ng-container matColumnDef="producto">
                 <th mat-header-cell *matHeaderCellDef class="headerTable"> Producto </th>
-                <td mat-cell *matCellDef="let element " [class]="(element.existencia < 10 && element.existencia >=1) ? 'porAcabar' : ''">{{element.nombreProducto}} </td>
+                <td mat-cell *matCellDef="let element " [class]="(element.existencia < 10 && element.existencia >=1) ? 'porAcabar': (element.existencia === 0) ? 'sinExistencias' : ''">{{element.nombreProducto}} </td>
             </ng-container>
             
 
             <ng-container matColumnDef="categoria">
                 <th mat-header-cell *matHeaderCellDef class="headerTable"> Categoria </th>
-                <td mat-cell *matCellDef="let element" [class]="(element.existencia < 10 && element.existencia >=1) ? 'porAcabar' : ''">{{element.nombreCategoria}} </td>
+                <td mat-cell *matCellDef="let element" [class]="(element.existencia < 10 && element.existencia >=1) ? 'porAcabar' : (element.existencia === 0) ? 'sinExistencias' : ''">{{element.nombreCategoria}} </td>
             </ng-container>
 
 
             <ng-container matColumnDef="unidadMedida">
                 <th mat-header-cell *matHeaderCellDef class="headerTable"> Unidad de Medida </th>
-                <td mat-cell *matCellDef="let element" [class]="(element.existencia < 10 && element.existencia >=1) ? 'porAcabar' :  ''"> {{element.nombreUM}}</td>
+                <td mat-cell *matCellDef="let element" [class]="(element.existencia < 10 && element.existencia >=1) ? 'porAcabar' : (element.existencia === 0) ? 'sinExistencias' :  ''"> {{element.nombreUM}}</td>
             </ng-container>
 
 
             <ng-container matColumnDef="existencias">
                 <th mat-header-cell *matHeaderCellDef class="headerTable"> Existencias </th>
-                <td mat-cell *matCellDef="let element" [class]="(element.existencia < 10 && element.existencia >=1) ? 'porAcabar' : ''"> {{element.existencia}}</td>
+                <td mat-cell *matCellDef="let element" [class]="(element.existencia < 10 && element.existencia >=1) ? 'porAcabar' : (element.existencia === 0) ? 'sinExistencias' : ''"> {{element.existencia}}</td>
             </ng-container>
 
             <ng-container matColumnDef="accion">

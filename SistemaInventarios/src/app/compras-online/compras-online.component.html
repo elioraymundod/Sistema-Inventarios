@@ -13,7 +13,7 @@
       <form class="example-form margen" [formGroup]="formFiltro">
         <mat-form-field class="example-full-width col-3">
           <mat-label>Filtro</mat-label>
-          <input matInput formControlName="filtro">
+          <input matInput formControlName="filtro" (keyup)="filtrar($event)">
         </mat-form-field>
         <button mat-mini-fab class="btnBusqueda" title="Ver carrito" data-bs-toggle="modal"
           data-bs-target="#carritoCompras" (click)="verCarrito()">
@@ -72,12 +72,12 @@
 
     <mat-tab label="Consultar pedido">
       <br>
-      <form class="example-form margen">
+      <form class="example-form margen" [formGroup]="formConsultarPedido">
         <mat-form-field class="example-full-width col-3">
           <mat-label>Código de venta</mat-label>
-          <input matInput>
+          <input matInput formControlName="codigo">
         </mat-form-field>
-        <button mat-button class="btnBusqueda">Realizar búsqueda</button>
+        <button mat-button class="btnBusqueda" (click)="consultarPedido(formConsultarPedido.value)" [disabled]="formConsultarPedido.invalid">Realizar búsqueda</button>
       </form>
     </mat-tab>
   </mat-tab-group>

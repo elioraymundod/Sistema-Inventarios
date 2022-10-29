@@ -9,6 +9,7 @@ import { InventarioComponent } from './bandeja-bodeguero/inventario/inventario.c
 import { BandejaVendedorComponent } from './bandeja-vendedor/bandeja-vendedor.component';
 import { RealizarVentaComponent } from './bandeja-vendedor/realizar-venta/realizar-venta.component';
 import { ComprasOnlineComponent } from './compras-online/compras-online.component';
+import { ConfirmacionPedidoComponent } from './confirmacion-pedido/confirmacion-pedido.component';
 import { LoginComponent } from './login/login.component';
 //import { MapaComponent } from './mapa/mapa.component';
 
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'inventario', component: InventarioComponent},
   {path: 'administrar-categorias', component: AdminCategoriasComponent},
   {path: 'administrar-um', component: AdminUMComponent},
+  {path: 'finalizar-pedido', component: ConfirmacionPedidoComponent},
   //{path: 'mapas', component: MapaComponent},
   {path: '**', component: LoginComponent},
 ];

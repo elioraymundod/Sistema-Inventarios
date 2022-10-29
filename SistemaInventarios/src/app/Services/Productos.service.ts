@@ -51,4 +51,6 @@ export class ProductosService {
     public updateTotalProducto(producto: any): Observable<any> {
         return this.http.put(`${this.baseUrl}/put/actualizar/cantidad/producto`, producto)
     }
+
+    
 }

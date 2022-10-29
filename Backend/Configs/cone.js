@@ -15,7 +15,7 @@ const mysqlConnection = mysql.createConnection({
   port: data.port,
   multipleStatements: true
 });
-
+/*
 const io = require('socket.io')(server, {
   cors: {
       origins: ['http://localhost:4200']
@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
           }
       }, 1000)
   })
-})
+})*/
 
 mysqlConnection.connect(function (err) {
   if (err) {
@@ -47,6 +47,6 @@ mysqlConnection.connect(function (err) {
   }
 });
 
-server.listen(3001, () => console.log('Todo bien !!'))
+//server.listen(3001, () => console.log('Todo bien !!'))
 
 module.exports = mysqlConnection;

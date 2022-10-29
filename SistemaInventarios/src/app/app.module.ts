@@ -27,6 +27,7 @@ import { BtnMyLocationComponent } from './btn-my-location/btn-my-location.compon
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { TarjetasService } from './Services/Tarjetas.service';
+import { ConfirmacionPedidoComponent } from './confirmacion-pedido/confirmacion-pedido.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { TarjetasService } from './Services/Tarjetas.service';
     LoginComponent,
     BtnMyLocationComponent,
     SearchBarComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    ConfirmacionPedidoComponent
   ],
   imports: [
     BrowserModule,

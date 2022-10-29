@@ -1,10 +1,14 @@
 /* Insert Catalogos */
 insert into sistema_ventas.catalogos (nombre, fecha_agrega, usuario_agrega, ip_agrega) values ('Roles', '2022-03-10', 'eraymundod', '156.654.156.12');
+insert into sistema_ventas.catalogos (nombre, fecha_agrega, usuario_agrega, ip_agrega) values ('Estados ventas', '2022-03-10', 'eraymundod', '156.654.156.12');
 
 /* Insert Datos Catalogos */
 insert into sistema_ventas.cat_dato (nombre, catalogo, fecha_agrega, usuario_agrega, ip_agrega) values ('Administrador', 1, '2022-03-10', 'eraymundod', '0.0.0.0');
 insert into sistema_ventas.cat_dato (nombre, catalogo, fecha_agrega, usuario_agrega, ip_agrega) values ('Vendedor', 1, '2022-03-10', 'eraymundod', '0.0.0.0');
 insert into sistema_ventas.cat_dato (nombre, catalogo, fecha_agrega, usuario_agrega, ip_agrega) values ('Bodeguero', 1, '2022-03-10', 'eraymundod', '0.0.0.0');
+insert into sistema_ventas.cat_dato (nombre, catalogo, fecha_agrega, usuario_agrega, ip_agrega) values ('No atendida', 2, '2022-03-10', 'eraymundod', '0.0.0.0');
+insert into sistema_ventas.cat_dato (nombre, catalogo, fecha_agrega, usuario_agrega, ip_agrega) values ('Producto en Ruta', 2, '2022-03-10', 'eraymundod', '0.0.0.0');
+insert into sistema_ventas.cat_dato (nombre, catalogo, fecha_agrega, usuario_agrega, ip_agrega) values ('Venta finalizada', 2, '2022-03-10', 'eraymundod', '0.0.0.0');
 
 /* Insert Usuario Master */
 insert into sistema_ventas.usuarios (id, nombre, user, pass, rol, tienda_asignada, fecha_agrega, usuario_agrega, ip_agrega) values ('100255426', 'Elio Raymundo', 'eraymundod', 'eZ7Fx2tz', 1, 1, '2022-03-10', 'eraymundod', '0.0.0.0');

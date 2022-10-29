@@ -54,6 +54,11 @@ export class InventarioComponent implements OnInit {
     this.getUM();
   }
 
+  filtrar(event: Event){
+    const filterValue = (event?.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   crearProducto(data: any) {
     const producto = {
       nombre: data.nombre,

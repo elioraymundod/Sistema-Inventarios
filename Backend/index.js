@@ -29,6 +29,7 @@ app.use(require('./Routes/UnidadesMedida'));
 app.use(require('./Routes/Productos'));
 app.use(require('./Routes/Ventas'));
 app.use(require('./Routes/Tarjetas'));
+app.use(require('./Routes/envioCorreo'));
 
 app.listen(app.get('port'),()=>{
     console.log(`Server rum on port ${app.get('port')}`)

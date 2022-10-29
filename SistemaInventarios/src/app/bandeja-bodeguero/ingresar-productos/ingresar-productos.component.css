@@ -65,6 +65,12 @@
     font-weight: bold;
 }
 
+.sinExistencias{
+    color: red;
+    font-weight: bold;
+}
+
+
 .headerTable {
     background-color: #2294B3;
     color: white;
@@ -76,4 +82,8 @@ table {
     text-align: justify;
     margin: auto;
     width: 100%;
+}
+
+.margen{
+    margin: 2%;
 }

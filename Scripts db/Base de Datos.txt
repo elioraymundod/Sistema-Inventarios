@@ -113,6 +113,8 @@ create table ventas(
     nit varchar(15),
 	venta_atendida int,
 	correo varchar(100),
+	codigo_envio varchar(10),
+	pedido_entregado int,
     fecha_agrega timestamp,
     usuario_agrega varchar(25),
     ip_agrega varchar(15),

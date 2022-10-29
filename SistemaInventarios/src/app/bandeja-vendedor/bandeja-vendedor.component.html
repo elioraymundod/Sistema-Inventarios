@@ -1,22 +1,22 @@
 <mat-toolbar>
-    <div class="container col-12">
+    <div class="col-12">
             <button mat-icon-button class="example-icon botones" [matMenuTriggerFor]="menu">
                 <mat-icon>person</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item class="botones">Cerrar sesión</button>
+                <button mat-menu-item class="botones" (click)="cerrarSesion()">Cerrar sesión</button>
             </mat-menu>
             <span>Sistema de Ventas</span>
-        <div class="alinearDerecha">
+        <!--div class="alinearDerecha">
             <button mat-icon-button class="botones">
                 <mat-icon matBadge="{{cantidadNotificaciones}}" matBadgeColor="warn">notifications</mat-icon>
             </button>
-        </div>
+        </div-->
     </div>
 </mat-toolbar><br>
 <H1 class="titulo"><b>Bienvenido a la bandeja del vendedor</b></H1><br><br>
 
-<mat-card class="matCardClass">
+<!--mat-card class="matCardClass">
     <div class="row">
         <div class="col-3">
             <div class="col-8 mx-auto">
@@ -37,12 +37,12 @@
             </div>
         </div>
         
-        <div class="col-3">
+        <!--div class="col-3">
             <div class="col-8 mx-auto">
               <div class="row">
                 <div class="col-md-12" id="verInventario">
                   <mat-icon class="bigIcon">insights</mat-icon>
-                  <!--img src="assets/img/inventario.png" class="bigIcon"-->
+                  <!--img src="assets/img/inventario.png" class="bigIcon">
                   <h1 class="marginTexto"><b>Reporteria</b></h1>
                 </div>
               </div>
@@ -57,4 +57,124 @@
             </div>
         </div>
     </div>    
-</mat-card>
+</mat-card-->
+
+<div class="margen">
+  <section>
+      <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef class="headerTable"> Fecha Creacion </th>
+              <td mat-cell *matCellDef="let element">{{element.fecha_agrega | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="direccion">
+              <th mat-header-cell *matHeaderCellDef class="headerTable"> Direccion </th>
+              <td mat-cell *matCellDef="let element">{{element.direccion}} </td>
+          </ng-container>
+          
+
+          <ng-container matColumnDef="correo">
+              <th mat-header-cell *matHeaderCellDef class="headerTable"> Correo de Contacto </th>
+              <td mat-cell *matCellDef="let element"> {{element.correo}}</td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="estado">
+              <th mat-header-cell *matHeaderCellDef class="headerTable"> Estado </th>
+              <td mat-cell *matCellDef="let element"> {{element.estado_venta}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="accion">
+              <th mat-header-cell *matHeaderCellDef class="headerTable"> Accion </th>
+              <td mat-cell *matCellDef="let element"> 
+                  <button  
+                  mat-icon-button class="example-icon btn" data-bs-toggle="modal"
+                  data-bs-target="#verPedido" (click)="setValues(element)">
+                      <mat-icon>visibility</mat-icon>
+                  </button>
+                  <!--button  *ngIf="element.venta_atendida === 5"
+                  mat-icon-button class="example-icon btn" data-bs-toggle="modal"
+                  data-bs-target="#verDetallePedido" (click)="setValues(element)"> *ngIf="element.venta_atendida === 4"
+                      <mat-icon>visibility</mat-icon>
+                  </button-->
+              </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[15]" showFirstLastButtons></mat-paginator>
+  </section>
+</div>
+
+
+<!--Modal ver pedido-->
+<div class="modal fade bd-example-modal-lg" id="verPedido" tabindex="-1" aria-labelledby="modalNuevoUsuarioLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="carritoComprasLabel">Ver pedido</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <mat-stepper [linear]="false" #stepper>
+          <mat-step>
+            <ng-template matStepLabel>Detalle de venta</ng-template>
+            <section class="example-container mat-elevation-z8" tabindex="0">
+              <table mat-table [dataSource]="dataSourceCarrito">
+                <!-- Item Column -->
+                <ng-container matColumnDef="producto">
+                  <th mat-header-cell *matHeaderCellDef> Nombre Producto </th>
+                  <td mat-cell *matCellDef="let transaction"> {{transaction.nombre_producto}} </td>
+                </ng-container>
+
+                <!-- Cost Column -->
+                <ng-container matColumnDef="cantidad">
+                  <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                  <td mat-cell *matCellDef="let transaction"> {{transaction.cantidad}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsCarrito"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsCarrito;"></tr>
+              </table>
+            </section>
+            <div>
+              <br><button mat-button matStepperNext class="btnBusqueda" style="float: right;"
+                [disabled]="this.listaProductos.length === 0">Siguiente</button>
+            </div>
+          </mat-step>
+          <mat-step label="Ver ruta indicada">
+            <!--div class="row">
+              <div class="col-4">
+
+                <app-btn-my-location></app-btn-my-location><br><br><br>
+                <app-search-bar></app-search-bar-
+              </div>
+              <div class="wrapper col-8">
+                <div #mapDiv class="map-container">
+
+                </div>
+              </div>
+            </div--><br>
+            <div class="row">
+              <div class="col-3"></div>
+              <div class="wrapper col-9">
+                <div #mapaCarrito class="map-container">
+                </div>
+              </div>
+            </div>
+            
+            <br><br><br><br><br><br><br><br><br><br><br><br>
+            <button *ngIf="showButtonEnviarVenta" mat-button  class="btnBusqueda"
+              style="float: right; margin-left: 5px;"
+              (click)="enviarPedido()" data-bs-dismiss="modal" >Enviar pedido</button>
+            <button mat-button matStepperPrevious class="btnBusqueda" style="float: right;">Regresar</button>
+          </mat-step>
+        </mat-stepper>
+      </div>
+    </div>
+  </div>
+</div>

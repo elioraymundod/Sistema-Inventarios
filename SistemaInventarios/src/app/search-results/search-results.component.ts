@@ -38,6 +38,6 @@ export class SearchResultsComponent implements OnInit {
     const end = place.center as [number, number];
     this.placeServices.lugarSeleccionado =  place.place_name_es;
     this.placeServices.coordenadasDestino = place.center;
-    this.mapService.getRouteBetwenPoints(start, end)
+    this.mapService.getRouteBetwenPoints(start, end, true)
   }
 }

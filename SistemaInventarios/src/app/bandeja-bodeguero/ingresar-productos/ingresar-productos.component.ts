@@ -41,6 +41,11 @@ export class IngresarProductosComponent implements OnInit {
     this.productoSeleccionado = data.idProducto
   }
 
+  filtrar(event: Event){
+    const filterValue = (event?.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   obtenerProductos() {
     this.productosService.getAllProducto().subscribe(res => {
       const productos = res.map((element: any) => {
